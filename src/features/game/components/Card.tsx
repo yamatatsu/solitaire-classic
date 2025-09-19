@@ -7,6 +7,8 @@ interface CardProps {
   onClick?: () => void;
   className?: string;
   draggable?: boolean;
+  size?: 'small' | 'medium' | 'large';
+  'data-testid'?: string;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -14,6 +16,8 @@ export const Card: React.FC<CardProps> = ({
   onClick,
   className,
   draggable = false,
+  size = 'medium',
+  'data-testid': testId,
 }) => {
   const isRed = card.suit === 'hearts' || card.suit === 'diamonds';
 
@@ -37,18 +41,37 @@ export const Card: React.FC<CardProps> = ({
     }
   };
 
+  // Size variants for responsive design
+  const sizeClasses = {
+    small: 'w-12 h-16 text-xs min-h-[44px] min-w-[44px]', // Mobile optimized
+    medium: 'w-16 h-24 text-sm min-h-[44px] min-w-[44px]', // Default
+    large: 'w-20 h-30 text-base min-h-[44px] min-w-[44px]', // Desktop large
+  };
+
+  const textSizes = {
+    small: { rank: 'text-xs', suit: 'text-sm' },
+    medium: { rank: 'text-xs', suit: 'text-2xl' },
+    large: { rank: 'text-sm', suit: 'text-3xl' },
+  };
+
   if (!card.faceUp) {
     return (
       <div
         className={cn(
-          'w-16 h-24 bg-blue-600 border border-gray-400 rounded-lg cursor-pointer',
+          sizeClasses[size],
+          'bg-blue-600 border border-gray-400 rounded-lg cursor-pointer',
           'flex items-center justify-center text-white font-bold',
+          'shadow-md hover:shadow-lg transition-shadow',
+          'touch-manipulation select-none',
           className
         )}
         onClick={onClick}
-        data-testid="card-back"
+        role="button"
+        tabIndex={onClick ? 0 : -1}
+        data-testid={testId || "card-back"}
+        aria-label={`Face down card, ${card.id}`}
       >
-        ?
+        <span className={textSizes[size].suit}>?</span>
       </div>
     );
   }
@@ -56,24 +79,30 @@ export const Card: React.FC<CardProps> = ({
   return (
     <div
       className={cn(
-        'w-16 h-24 bg-white border border-gray-400 rounded-lg cursor-pointer',
+        sizeClasses[size],
+        'bg-white border border-gray-400 rounded-lg cursor-pointer',
         'flex flex-col items-center justify-between p-1',
+        'shadow-md hover:shadow-lg transition-shadow',
+        'touch-manipulation select-none',
         isRed ? 'text-red-500' : 'text-black',
         className
       )}
       onClick={onClick}
       draggable={draggable}
-      data-testid="card-face"
+      role="button"
+      tabIndex={onClick ? 0 : -1}
+      data-testid={testId || "card-face"}
       data-suit={card.suit}
       data-rank={card.rank}
+      aria-label={`${getRankDisplay(card.rank)} of ${card.suit}, ${card.id}`}
     >
-      <div className="text-xs font-bold">
+      <div className={cn(textSizes[size].rank, "font-bold")}>
         {getRankDisplay(card.rank)}
       </div>
-      <div className="text-2xl">
+      <div className={textSizes[size].suit}>
         {getSuitSymbol(card.suit)}
       </div>
-      <div className="text-xs font-bold transform rotate-180">
+      <div className={cn(textSizes[size].rank, "font-bold transform rotate-180")}>
         {getRankDisplay(card.rank)}
       </div>
     </div>

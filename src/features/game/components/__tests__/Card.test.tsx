@@ -171,6 +171,74 @@ describe('Card Component', () => {
     });
   });
 
+  describe('Responsive Design', () => {
+    it('should render small size correctly', () => {
+      render(<Card card={mockCard} size="small" />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveClass('w-12', 'h-16', 'min-h-[44px]', 'min-w-[44px]');
+    });
+
+    it('should render medium size by default', () => {
+      render(<Card card={mockCard} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveClass('w-16', 'h-24', 'min-h-[44px]', 'min-w-[44px]');
+    });
+
+    it('should render large size correctly', () => {
+      render(<Card card={mockCard} size="large" />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveClass('w-20', 'h-30', 'min-h-[44px]', 'min-w-[44px]');
+    });
+
+    it('should meet minimum touch target requirements', () => {
+      render(<Card card={mockCard} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveClass('min-h-[44px]', 'min-w-[44px]');
+    });
+  });
+
+  describe('Accessibility', () => {
+    it('should have proper ARIA attributes for face up card', () => {
+      render(<Card card={mockCard} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveAttribute('role', 'button');
+      expect(cardElement).toHaveAttribute('aria-label', '7 of hearts, hearts-7');
+    });
+
+    it('should have proper ARIA attributes for face down card', () => {
+      const faceDownCard: CardType = {
+        ...mockCard,
+        faceUp: false,
+      };
+
+      render(<Card card={faceDownCard} />);
+
+      const cardElement = screen.getByTestId('card-back');
+      expect(cardElement).toHaveAttribute('role', 'button');
+      expect(cardElement).toHaveAttribute('aria-label', 'Face down card, hearts-7');
+    });
+
+    it('should have correct tabIndex when clickable', () => {
+      const onClickMock = vi.fn();
+      render(<Card card={mockCard} onClick={onClickMock} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveAttribute('tabIndex', '0');
+    });
+
+    it('should have correct tabIndex when not clickable', () => {
+      render(<Card card={mockCard} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveAttribute('tabIndex', '-1');
+    });
+  });
+
   describe('Interactions', () => {
     it('should call onClick when clicked', () => {
       const onClickMock = vi.fn();
@@ -204,6 +272,19 @@ describe('Card Component', () => {
 
       const cardElement = screen.getByTestId('card-face');
       expect(cardElement).toHaveAttribute('draggable', 'false');
+    });
+
+    it('should accept custom data-testid', () => {
+      render(<Card card={mockCard} data-testid="custom-card" />);
+
+      expect(screen.getByTestId('custom-card')).toBeInTheDocument();
+    });
+
+    it('should have touch-optimized styling', () => {
+      render(<Card card={mockCard} />);
+
+      const cardElement = screen.getByTestId('card-face');
+      expect(cardElement).toHaveClass('touch-manipulation', 'select-none');
     });
   });
 });
