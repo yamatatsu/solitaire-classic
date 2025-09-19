@@ -24,7 +24,8 @@
         "recommended": true
       },
       "complexity": {
-        "recommended": true
+        "recommended": true,
+        "noImportantStyles": "off"
       },
       "correctness": {
         "recommended": true
@@ -39,7 +40,8 @@
         "recommended": true
       },
       "suspicious": {
-        "recommended": true
+        "recommended": true,
+        "noUnknownAtRules": "off"
       }
     }
   },
