@@ -8,10 +8,7 @@ import { useStockPile } from "./useStockPile";
  */
 export const useGameActions = () => {
   // Initialize drag and drop with actual game move handling
-  const {
-    dragHandlers,
-    touchHandlers,
-  } = useDragAndDrop({
+  const { dragHandlers, touchHandlers } = useDragAndDrop({
     onCardMove: (dragData, dropTarget) => {
       // TODO: Implement actual card move logic
       console.log("Card move:", dragData, dropTarget);
@@ -26,11 +23,14 @@ export const useGameActions = () => {
   const { drawFromStock } = useStockPile();
 
   // Create specific handlers for each game board interaction
-  const onTableauCardClick = useCallback((cardId: string, columnIndex: number, cardIndex: number) => {
-    // For now, just log the interaction
-    // In a real implementation, this would trigger drag start or card selection
-    console.log("Tableau card clicked:", { cardId, columnIndex, cardIndex });
-  }, []);
+  const onTableauCardClick = useCallback(
+    (cardId: string, columnIndex: number, cardIndex: number) => {
+      // For now, just log the interaction
+      // In a real implementation, this would trigger drag start or card selection
+      console.log("Tableau card clicked:", { cardId, columnIndex, cardIndex });
+    },
+    []
+  );
 
   const onTableauColumnClick = useCallback((columnIndex: number) => {
     // Handle clicking on empty tableau column
@@ -42,10 +42,13 @@ export const useGameActions = () => {
     console.log("Foundation clicked:", foundationIndex);
   }, []);
 
-  const onFoundationCardClick = useCallback((cardId: string, foundationIndex: number) => {
-    // Handle clicking on foundation card (usually for auto-complete)
-    console.log("Foundation card clicked:", { cardId, foundationIndex });
-  }, []);
+  const onFoundationCardClick = useCallback(
+    (cardId: string, foundationIndex: number) => {
+      // Handle clicking on foundation card (usually for auto-complete)
+      console.log("Foundation card clicked:", { cardId, foundationIndex });
+    },
+    []
+  );
 
   const onStockClick = useCallback(() => {
     drawFromStock();

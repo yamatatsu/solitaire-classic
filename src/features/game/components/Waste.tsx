@@ -24,7 +24,7 @@ export const Waste: React.FC<WasteProps> = ({
 
   // Get the visible cards (last maxVisible cards)
   const visibleCards = cards.slice(-maxVisible);
-  const topCardIndex = cards.length - 1;
+  // const topCardIndex = cards.length - 1; // Unused variable
 
   const handleCardClick = (cardId: string, visibleIndex: number) => {
     // Calculate the actual card index in the full cards array
@@ -40,9 +40,17 @@ export const Waste: React.FC<WasteProps> = ({
     onWasteClick?.();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onWasteClick?.();
+    }
+  };
+
   if (!hasCards) {
     return (
-      <div
+      <button
+        type="button"
         className={cn(
           "relative flex items-center justify-center",
           "w-16 h-24 min-h-[44px] min-w-[44px]", // Ensure touch targets
@@ -51,24 +59,23 @@ export const Waste: React.FC<WasteProps> = ({
           "shadow-sm"
         )}
         onClick={handleWasteClick}
+        onKeyDown={handleKeyDown}
         data-testid={testId || "waste-empty"}
-        role="button"
-        tabIndex={0}
         aria-label="Empty waste pile"
       >
         <div className="flex items-center justify-center p-2">
           <div className="text-xs text-gray-400 font-medium">Waste</div>
         </div>
-      </div>
+      </button>
     );
   }
 
   return (
-    <div
+    <section
       className={cn("relative w-20 h-24", className)}
       onClick={handleWasteClick}
+      onKeyDown={handleKeyDown}
       data-testid={testId || "waste"}
-      role="region"
       aria-label={`Waste pile with ${cards.length} cards, showing top ${visibleCards.length}`}
     >
       {visibleCards.map((card, visibleIndex) => {
@@ -123,6 +130,6 @@ export const Waste: React.FC<WasteProps> = ({
           {cards.length}
         </div>
       )}
-    </div>
+    </section>
   );
 };

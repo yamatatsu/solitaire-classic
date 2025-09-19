@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@/test/game-test-utils";
-import type { Card } from "../../types";
+import type { Card, Rank } from "../../types";
 import { Waste } from "../Waste";
 
 describe("Waste Component", () => {
@@ -305,7 +305,7 @@ describe("Waste Component", () => {
       for (let i = 1; i <= 10; i++) {
         manyCards.push({
           suit: "hearts",
-          rank: ((i % 13) + 1) as any,
+          rank: ((i % 13) + 1) as Rank,
           faceUp: true,
           id: `hearts-${i}`,
         });

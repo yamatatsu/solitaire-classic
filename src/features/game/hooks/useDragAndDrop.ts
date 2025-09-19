@@ -1,6 +1,5 @@
 import { useAtom } from "jotai";
 import { useCallback, useEffect, useRef } from "react";
-import type { Card, DragData, DropTarget, TouchData } from "../types";
 import {
   dragStateAtom,
   endDragAtom,
@@ -13,33 +12,37 @@ import {
   updateDropTargetAtom,
   updateTouchAtom,
 } from "../stores";
+import type { Card, DragData, DropTarget, TouchData } from "../types";
+import { parseGameLocation } from "../utils";
 import {
   isValidFoundationMove,
   isValidTableauMove,
-  isValidTableauToFoundation,
-  isValidTableauToTableau,
-  isValidWasteToFoundation,
-  isValidWasteToTableau,
 } from "../utils/move-validation";
-import { parseGameLocation } from "../utils";
 
 interface UseDragAndDropProps {
-  onCardMove?: (
-    dragData: DragData,
-    dropTarget: DropTarget
-  ) => void;
+  onCardMove?: (dragData: DragData, dropTarget: DropTarget) => void;
   onCardFlip?: (location: string, cardIndex: number) => void;
 }
 
 interface DragHandlers {
-  onDragStart: (event: DragEvent, card: Card, location: string, index: number) => void;
+  onDragStart: (
+    event: DragEvent,
+    card: Card,
+    location: string,
+    index: number
+  ) => void;
   onDragEnd: (event: DragEvent) => void;
   onDragOver: (event: DragEvent) => void;
   onDrop: (event: DragEvent, location: string, index?: number) => void;
 }
 
 interface TouchHandlers {
-  onTouchStart: (event: TouchEvent, card: Card, location: string, index: number) => void;
+  onTouchStart: (
+    event: TouchEvent,
+    card: Card,
+    location: string,
+    index: number
+  ) => void;
   onTouchMove: (event: TouchEvent) => void;
   onTouchEnd: (event: TouchEvent) => void;
 }
@@ -153,7 +156,9 @@ export const useDragAndDrop = ({
 
   const onDragOver = useCallback((event: DragEvent) => {
     event.preventDefault();
-    event.dataTransfer!.dropEffect = "move";
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = "move";
+    }
   }, []);
 
   const onDrop = useCallback(
@@ -232,7 +237,7 @@ export const useDragAndDrop = ({
 
       // Calculate distance moved
       const distance = Math.sqrt(
-        Math.pow(currentX - startX, 2) + Math.pow(currentY - startY, 2)
+        (currentX - startX) ** 2 + (currentY - startY) ** 2
       );
 
       // Cancel long press if moved too much (10px threshold)
@@ -257,16 +262,19 @@ export const useDragAndDrop = ({
         // Find element under touch point
         const elementBelow = document.elementFromPoint(currentX, currentY);
         if (elementBelow) {
-          const dropZone = elementBelow.closest('[data-drop-zone]');
+          const dropZone = elementBelow.closest("[data-drop-zone]");
           if (dropZone) {
-            const location = dropZone.getAttribute('data-location');
-            const index = dropZone.getAttribute('data-index');
+            const location = dropZone.getAttribute("data-location");
+            const index = dropZone.getAttribute("data-index");
 
             if (location) {
               const dropTarget: DropTarget = {
                 location,
                 index: index ? parseInt(index, 10) : undefined,
-                isValid: isValidDrop(location, index ? parseInt(index, 10) : undefined),
+                isValid: isValidDrop(
+                  location,
+                  index ? parseInt(index, 10) : undefined
+                ),
               };
 
               updateDropTarget(dropTarget);
@@ -293,7 +301,11 @@ export const useDragAndDrop = ({
       }
 
       // If this was a drag operation, handle the drop
-      if (dragState.isDragging && dragState.dropTarget && longPressRef.current) {
+      if (
+        dragState.isDragging &&
+        dragState.dropTarget &&
+        longPressRef.current
+      ) {
         if (dragState.dropTarget.isValid && onCardMove && dragState.dragData) {
           onCardMove(dragState.dragData, dragState.dropTarget);
         }
@@ -304,8 +316,8 @@ export const useDragAndDrop = ({
         if (touchData && onCardFlip) {
           // Extract location and index from the touch target
           const target = touchData.element;
-          const location = target.getAttribute('data-location');
-          const index = target.getAttribute('data-index');
+          const location = target.getAttribute("data-location");
+          const index = target.getAttribute("data-index");
 
           if (location && index !== null) {
             onCardFlip(location, parseInt(index, 10));
@@ -320,8 +332,7 @@ export const useDragAndDrop = ({
       dragState.isDragging,
       dragState.dropTarget,
       dragState.dragData,
-      touchState.isTouching,
-      touchState.touchData,
+      touchState,
       onCardMove,
       onCardFlip,
       endDrag,

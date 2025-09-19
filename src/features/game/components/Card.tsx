@@ -74,9 +74,17 @@ export const Card: React.FC<CardProps> = ({
     large: { rank: "text-sm", suit: "text-3xl" },
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onClick?.();
+    }
+  };
+
   if (!card.faceUp) {
     return (
-      <div
+      <button
+        type="button"
         className={cn(
           sizeClasses[size],
           "bg-blue-600 border border-gray-400 rounded-lg cursor-pointer",
@@ -86,24 +94,25 @@ export const Card: React.FC<CardProps> = ({
           className
         )}
         onClick={onClick}
+        onKeyDown={handleKeyDown}
         draggable={draggable}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-        role="button"
-        tabIndex={onClick ? 0 : -1}
+        disabled={!onClick}
         data-testid={testId || "card-back"}
         aria-label={`Face down card, ${card.id}`}
       >
         <span className={textSizes[size].suit}>?</span>
-      </div>
+      </button>
     );
   }
 
   return (
-    <div
+    <button
+      type="button"
       className={cn(
         sizeClasses[size],
         "bg-white border border-gray-400 rounded-lg cursor-pointer",
@@ -114,14 +123,14 @@ export const Card: React.FC<CardProps> = ({
         className
       )}
       onClick={onClick}
+      onKeyDown={handleKeyDown}
       draggable={draggable}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
-      role="button"
-      tabIndex={onClick ? 0 : -1}
+      disabled={!onClick}
       data-testid={testId || "card-face"}
       data-suit={card.suit}
       data-rank={card.rank}
@@ -136,6 +145,6 @@ export const Card: React.FC<CardProps> = ({
       >
         {getRankDisplay(card.rank)}
       </div>
-    </div>
+    </button>
   );
 };

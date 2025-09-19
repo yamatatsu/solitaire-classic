@@ -36,7 +36,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   "data-testid": testId,
 }) => {
   return (
-    <div
+    <main
       className={cn(
         "w-full min-h-screen bg-green-600 p-4",
         "flex flex-col gap-6",
@@ -46,7 +46,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         className
       )}
       data-testid={testId || "game-board"}
-      role="main"
       aria-label="Solitaire Game Board"
     >
       {/* Top area - Foundation and Stock/Waste */}
@@ -126,6 +125,6 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };

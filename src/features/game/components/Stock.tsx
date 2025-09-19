@@ -23,9 +23,17 @@ export const Stock: React.FC<StockProps> = ({
     onStockClick?.();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      onStockClick?.();
+    }
+  };
+
   if (!hasCards) {
     return (
-      <div
+      <button
+        type="button"
         className={cn(
           "relative flex items-center justify-center",
           "w-16 h-24 min-h-[44px] min-w-[44px]", // Ensure touch targets
@@ -34,24 +42,22 @@ export const Stock: React.FC<StockProps> = ({
           "shadow-sm"
         )}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
         data-testid={testId || "stock-empty"}
-        role="button"
-        tabIndex={0}
         aria-label="Empty stock pile - click to reset from waste"
       >
         <div className="flex flex-col items-center justify-center p-2">
           <div className="text-2xl text-gray-400 mb-1">↻</div>
           <div className="text-xs text-gray-400 font-medium">Reset</div>
         </div>
-      </div>
+      </button>
     );
   }
 
   return (
-    <div
+    <section
       className={cn("relative", className)}
       data-testid={testId || "stock"}
-      role="region"
       aria-label={`Stock pile with ${cards.length} cards`}
     >
       {/* Show multiple card backs to indicate stack depth */}
@@ -88,6 +94,6 @@ export const Stock: React.FC<StockProps> = ({
           {cards.length}
         </div>
       )}
-    </div>
+    </section>
   );
 };

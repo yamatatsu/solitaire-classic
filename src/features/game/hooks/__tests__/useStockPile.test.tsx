@@ -1,10 +1,9 @@
 import { act, renderHook } from "@testing-library/react";
 import { Provider } from "jotai";
 import type { ReactNode } from "react";
-import { describe, expect, it, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Card } from "../../types";
 import { useStockPile } from "../useStockPile";
-import { stockAtom, wasteAtom } from "../../stores";
 
 // Test wrapper with Jotai Provider
 const TestWrapper = ({ children }: { children: ReactNode }) => (
@@ -15,7 +14,11 @@ describe("useStockPile", () => {
   let mockOnStockClick: ReturnType<typeof vi.fn>;
   let mockOnWasteClick: ReturnType<typeof vi.fn>;
 
-  const createMockCard = (suit: string, rank: number, faceUp = false): Card => ({
+  const createMockCard = (
+    suit: string,
+    rank: number,
+    faceUp = false
+  ): Card => ({
     id: `${suit}-${rank}`,
     suit: suit as Card["suit"],
     rank: rank as Card["rank"],
@@ -45,12 +48,15 @@ describe("useStockPile", () => {
 
   describe("Draw Functionality", () => {
     it("should draw one card in draw-1 mode", async () => {
-      const { result } = renderHook(() => useStockPile({ drawCount: 1, onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ drawCount: 1, onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Setup stock with cards
-      const stockCards = [
+      const _stockCards = [
         createMockCard("hearts", 1),
         createMockCard("diamonds", 2),
         createMockCard("clubs", 3),
@@ -64,17 +70,23 @@ describe("useStockPile", () => {
     });
 
     it("should draw three cards in draw-3 mode", () => {
-      const { result } = renderHook(() => useStockPile({ drawCount: 3, onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ drawCount: 3, onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       expect(result.current.canDrawFromStock).toBe(false); // No cards in stock initially
     });
 
     it("should call onStockClick when drawing from stock", () => {
-      const { result } = renderHook(() => useStockPile({ onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Test drawing when there are no cards (should not call callback)
       act(() => {
@@ -106,9 +118,12 @@ describe("useStockPile", () => {
     });
 
     it("should call onStockClick when recycling stock", () => {
-      const { result } = renderHook(() => useStockPile({ onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Try to recycle when conditions are not met
       act(() => {
@@ -148,7 +163,7 @@ describe("useStockPile", () => {
 
       // This tests the internal logic - when cards are drawn, they should be flipped face up
       // The actual implementation would handle this in drawFromStock
-      expect(result.current.waste.every(card => card.faceUp)).toBe(true);
+      expect(result.current.waste.every((card) => card.faceUp)).toBe(true);
     });
 
     it("should ensure cards are face down when recycled to stock", () => {
@@ -158,7 +173,7 @@ describe("useStockPile", () => {
 
       // This tests the internal logic - when cards are recycled, they should be face down
       // The actual implementation would handle this in recycleStock
-      expect(result.current.stock.every(card => !card.faceUp)).toBe(true);
+      expect(result.current.stock.every((card) => !card.faceUp)).toBe(true);
     });
   });
 
@@ -183,9 +198,12 @@ describe("useStockPile", () => {
 
     it("should handle invalid draw counts gracefully", () => {
       // TypeScript should prevent this, but test runtime behavior
-      const { result } = renderHook(() => useStockPile({ drawCount: 2 as 1 | 3 }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ drawCount: 2 as 1 | 3 }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Should still work without crashing
       expect(result.current.getDrawableCards()).toEqual([]);
@@ -194,9 +212,12 @@ describe("useStockPile", () => {
 
   describe("Performance", () => {
     it("should respond to stock click within performance threshold", () => {
-      const { result } = renderHook(() => useStockPile({ onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const startTime = performance.now();
 
@@ -212,9 +233,12 @@ describe("useStockPile", () => {
     });
 
     it("should handle rapid consecutive clicks gracefully", () => {
-      const { result } = renderHook(() => useStockPile({ onStockClick: mockOnStockClick }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useStockPile({ onStockClick: mockOnStockClick }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Simulate rapid clicking
       const clickCount = 10;
@@ -288,13 +312,19 @@ describe("useStockPile", () => {
 
   describe("Integration", () => {
     it("should work correctly with different hook configurations", () => {
-      const { result: result1 } = renderHook(() => useStockPile({ drawCount: 1 }), {
-        wrapper: TestWrapper,
-      });
+      const { result: result1 } = renderHook(
+        () => useStockPile({ drawCount: 1 }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
-      const { result: result2 } = renderHook(() => useStockPile({ drawCount: 3 }), {
-        wrapper: TestWrapper,
-      });
+      const { result: result2 } = renderHook(
+        () => useStockPile({ drawCount: 3 }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Both should work independently
       expect(result1.current.stock).toEqual(result2.current.stock);
@@ -302,12 +332,16 @@ describe("useStockPile", () => {
     });
 
     it("should handle callback combinations correctly", () => {
-      const { result } = renderHook(() => useStockPile({
-        onStockClick: mockOnStockClick,
-        onWasteClick: mockOnWasteClick,
-      }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () =>
+          useStockPile({
+            onStockClick: mockOnStockClick,
+            onWasteClick: mockOnWasteClick,
+          }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Should work with both callbacks defined - test the hook functionality
       expect(typeof result.current.drawFromStock).toBe("function");

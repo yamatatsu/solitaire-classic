@@ -193,8 +193,8 @@ describe("Game Utils", () => {
       const deck = createDeck();
       const suits = ["hearts", "diamonds", "clubs", "spades"];
 
-      suits.forEach(suit => {
-        const suitCards = deck.filter(card => card.suit === suit);
+      suits.forEach((suit) => {
+        const suitCards = deck.filter((card) => card.suit === suit);
         expect(suitCards).toHaveLength(13);
       });
     });
@@ -203,9 +203,9 @@ describe("Game Utils", () => {
       const deck = createDeck();
       const suits = ["hearts", "diamonds", "clubs", "spades"];
 
-      suits.forEach(suit => {
-        const suitCards = deck.filter(card => card.suit === suit);
-        const ranks = suitCards.map(card => card.rank).sort((a, b) => a - b);
+      suits.forEach((suit) => {
+        const suitCards = deck.filter((card) => card.suit === suit);
+        const ranks = suitCards.map((card) => card.rank).sort((a, b) => a - b);
         const expectedRanks = Array.from({ length: 13 }, (_, i) => i + 1);
         expect(ranks).toEqual(expectedRanks);
       });
@@ -213,14 +213,14 @@ describe("Game Utils", () => {
 
     it("should create cards with correct IDs", () => {
       const deck = createDeck();
-      deck.forEach(card => {
+      deck.forEach((card) => {
         expect(card.id).toBe(createCardId(card.suit, card.rank));
       });
     });
 
     it("should create all cards face down by default", () => {
       const deck = createDeck();
-      deck.forEach(card => {
+      deck.forEach((card) => {
         expect(card.faceUp).toBe(false);
       });
     });
@@ -237,8 +237,8 @@ describe("Game Utils", () => {
       const deck = createDeck();
       const shuffled = shuffleDeck(deck);
 
-      deck.forEach(card => {
-        expect(shuffled.find(c => c.id === card.id)).toBeDefined();
+      deck.forEach((card) => {
+        expect(shuffled.find((c) => c.id === card.id)).toBeDefined();
       });
     });
 
@@ -280,7 +280,7 @@ describe("Game Utils", () => {
 
       // Check foundations (4 empty piles)
       expect(gameState.foundations).toHaveLength(4);
-      gameState.foundations.forEach(foundation => {
+      gameState.foundations.forEach((foundation) => {
         expect(foundation).toHaveLength(0);
       });
 
@@ -288,14 +288,17 @@ describe("Game Utils", () => {
       expect(gameState.waste).toHaveLength(0);
 
       // Check stock has remaining cards
-      const tableauCardCount = gameState.tableau.reduce((sum, col) => sum + col.length, 0);
+      const tableauCardCount = gameState.tableau.reduce(
+        (sum, col) => sum + col.length,
+        0
+      );
       expect(gameState.stock).toHaveLength(52 - tableauCardCount);
     });
 
     it("should have only bottom cards face up in tableau", () => {
       const gameState = createNewGameState();
 
-      gameState.tableau.forEach(column => {
+      gameState.tableau.forEach((column) => {
         column.forEach((card, index) => {
           if (index === column.length - 1) {
             // Bottom card should be face up
@@ -311,7 +314,7 @@ describe("Game Utils", () => {
     it("should have all stock cards face down", () => {
       const gameState = createNewGameState();
 
-      gameState.stock.forEach(card => {
+      gameState.stock.forEach((card) => {
         expect(card.faceUp).toBe(false);
       });
     });
@@ -322,11 +325,11 @@ describe("Game Utils", () => {
       // Collect all cards from all areas
       const allCards: Card[] = [];
 
-      gameState.tableau.forEach(column => {
+      gameState.tableau.forEach((column) => {
         allCards.push(...column);
       });
 
-      gameState.foundations.forEach(foundation => {
+      gameState.foundations.forEach((foundation) => {
         allCards.push(...foundation);
       });
 
@@ -337,14 +340,16 @@ describe("Game Utils", () => {
       expect(allCards).toHaveLength(52);
 
       // All cards should have unique IDs
-      const cardIds = allCards.map(card => card.id);
+      const cardIds = allCards.map((card) => card.id);
       const uniqueIds = new Set(cardIds);
       expect(uniqueIds.size).toBe(52);
 
       // Should have all expected cards
       const expectedDeck = createDeck();
-      expectedDeck.forEach(expectedCard => {
-        expect(allCards.find(card => card.id === expectedCard.id)).toBeDefined();
+      expectedDeck.forEach((expectedCard) => {
+        expect(
+          allCards.find((card) => card.id === expectedCard.id)
+        ).toBeDefined();
       });
     });
 
@@ -357,7 +362,9 @@ describe("Game Utils", () => {
 
       for (let col = 0; col < 7; col++) {
         for (let row = 0; row < gameState1.tableau[col].length; row++) {
-          if (gameState1.tableau[col][row].id !== gameState2.tableau[col][row].id) {
+          if (
+            gameState1.tableau[col][row].id !== gameState2.tableau[col][row].id
+          ) {
             differences++;
           }
         }
@@ -378,7 +385,10 @@ describe("Game Utils", () => {
       });
 
       // Total tableau cards should be 1+2+3+4+5+6+7 = 28
-      const totalTableauCards = gameState.tableau.reduce((sum, col) => sum + col.length, 0);
+      const totalTableauCards = gameState.tableau.reduce(
+        (sum, col) => sum + col.length,
+        0
+      );
       expect(totalTableauCards).toBe(28);
 
       // Stock should have the remaining 24 cards

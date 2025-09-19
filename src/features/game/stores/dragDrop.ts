@@ -1,5 +1,11 @@
 import { atom } from "jotai";
-import type { DragData, DragState, DropTarget, TouchData, TouchState } from "../types";
+import type {
+  DragData,
+  DragState,
+  DropTarget,
+  TouchData,
+  TouchState,
+} from "../types";
 
 // Base drag state atom
 export const dragStateAtom = atom<DragState>({
@@ -17,16 +23,13 @@ export const touchStateAtom = atom<TouchState>({
 });
 
 // Action to start dragging
-export const startDragAtom = atom(
-  null,
-  (get, set, dragData: DragData) => {
-    set(dragStateAtom, {
-      ...get(dragStateAtom),
-      isDragging: true,
-      dragData,
-    });
-  }
-);
+export const startDragAtom = atom(null, (get, set, dragData: DragData) => {
+  set(dragStateAtom, {
+    ...get(dragStateAtom),
+    isDragging: true,
+    dragData,
+  });
+});
 
 // Action to update drop target
 export const updateDropTargetAtom = atom(
@@ -51,40 +54,31 @@ export const setDragPreviewAtom = atom(
 );
 
 // Action to end dragging
-export const endDragAtom = atom(
-  null,
-  (get, set) => {
-    set(dragStateAtom, {
-      isDragging: false,
-      dragData: null,
-      dropTarget: null,
-      dragPreview: null,
-    });
-  }
-);
+export const endDragAtom = atom(null, (get, set) => {
+  set(dragStateAtom, {
+    isDragging: false,
+    dragData: null,
+    dropTarget: null,
+    dragPreview: null,
+  });
+});
 
 // Action to start touch interaction
-export const startTouchAtom = atom(
-  null,
-  (get, set, touchData: TouchData) => {
-    set(touchStateAtom, {
-      ...get(touchStateAtom),
-      isTouching: true,
-      touchData,
-    });
-  }
-);
+export const startTouchAtom = atom(null, (get, set, touchData: TouchData) => {
+  set(touchStateAtom, {
+    ...get(touchStateAtom),
+    isTouching: true,
+    touchData,
+  });
+});
 
 // Action to update touch data
-export const updateTouchAtom = atom(
-  null,
-  (get, set, touchData: TouchData) => {
-    set(touchStateAtom, {
-      ...get(touchStateAtom),
-      touchData,
-    });
-  }
-);
+export const updateTouchAtom = atom(null, (get, set, touchData: TouchData) => {
+  set(touchStateAtom, {
+    ...get(touchStateAtom),
+    touchData,
+  });
+});
 
 // Action to set touch target element
 export const setTouchTargetAtom = atom(
@@ -98,16 +92,13 @@ export const setTouchTargetAtom = atom(
 );
 
 // Action to end touch interaction
-export const endTouchAtom = atom(
-  null,
-  (get, set) => {
-    set(touchStateAtom, {
-      isTouching: false,
-      touchData: null,
-      touchTarget: null,
-    });
-  }
-);
+export const endTouchAtom = atom(null, (get, set) => {
+  set(touchStateAtom, {
+    isTouching: false,
+    touchData: null,
+    touchTarget: null,
+  });
+});
 
 // Derived atom to check if currently dragging or touching
 export const isInteractingAtom = atom<boolean>((get) => {

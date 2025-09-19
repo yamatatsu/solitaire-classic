@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@/test/game-test-utils";
-import type { GameState } from "../../types";
+import type { GameState, Rank } from "../../types";
 import { GameBoard } from "../GameBoard";
 
 describe("GameBoard Component", () => {
@@ -339,25 +339,25 @@ describe("GameBoard Component", () => {
         foundations: [
           Array.from({ length: 13 }, (_, i) => ({
             suit: "hearts" as const,
-            rank: (i + 1) as any,
+            rank: (i + 1) as Rank,
             faceUp: true,
             id: `hearts-${i + 1}`,
           })),
           Array.from({ length: 13 }, (_, i) => ({
             suit: "diamonds" as const,
-            rank: (i + 1) as any,
+            rank: (i + 1) as Rank,
             faceUp: true,
             id: `diamonds-${i + 1}`,
           })),
           Array.from({ length: 13 }, (_, i) => ({
             suit: "clubs" as const,
-            rank: (i + 1) as any,
+            rank: (i + 1) as Rank,
             faceUp: true,
             id: `clubs-${i + 1}`,
           })),
           Array.from({ length: 13 }, (_, i) => ({
             suit: "spades" as const,
-            rank: (i + 1) as any,
+            rank: (i + 1) as Rank,
             faceUp: true,
             id: `spades-${i + 1}`,
           })),
@@ -377,7 +377,7 @@ describe("GameBoard Component", () => {
         tableau: [
           Array.from({ length: 20 }, (_, i) => ({
             suit: "hearts" as const,
-            rank: ((i % 13) + 1) as any,
+            rank: ((i % 13) + 1) as Rank,
             faceUp: i === 19, // Only last card face up
             id: `hearts-${i}`,
           })),

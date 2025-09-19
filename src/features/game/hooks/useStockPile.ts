@@ -1,14 +1,14 @@
 import { useAtom } from "jotai";
 import { useCallback } from "react";
-import type { Card } from "../types";
 import {
+  addCardToStock,
+  addCardToWaste,
+  clearWaste,
+  removeCardFromStock,
   stockAtom,
   wasteAtom,
-  addCardToWaste,
-  removeCardFromStock,
-  clearWaste,
-  addCardToStock,
 } from "../stores";
+import type { Card } from "../types";
 
 interface UseStockPileProps {
   drawCount?: 1 | 3; // Number of cards to draw from stock (Klondike variation)
@@ -82,7 +82,7 @@ export const useStockPile = ({
     }
 
     // Add cards to waste (flip them face up)
-    drawnCards.forEach(card => {
+    drawnCards.forEach((card) => {
       const flippedCard: Card = { ...card, faceUp: true };
       addToWaste({ card: flippedCard });
     });
@@ -116,7 +116,7 @@ export const useStockPile = ({
     clearWastePile();
 
     // Add cards back to stock face down
-    wasteCards.forEach(card => {
+    wasteCards.forEach((card) => {
       const faceDownCard: Card = { ...card, faceUp: false };
       addToStock({ card: faceDownCard, faceDown: true });
     });
@@ -125,13 +125,7 @@ export const useStockPile = ({
     if (onStockClick) {
       onStockClick();
     }
-  }, [
-    waste,
-    canRecycleStock,
-    clearWastePile,
-    addToStock,
-    onStockClick,
-  ]);
+  }, [waste, canRecycleStock, clearWastePile, addToStock, onStockClick]);
 
   return {
     stock,

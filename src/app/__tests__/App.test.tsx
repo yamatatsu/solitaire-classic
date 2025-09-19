@@ -9,10 +9,14 @@ describe("App Integration", () => {
 
     // Check for main header
     expect(screen.getByText("Solitaire Classic")).toBeInTheDocument();
-    expect(screen.getByText("Klondike Solitaire - Complete MVP")).toBeInTheDocument();
+    expect(
+      screen.getByText("Klondike Solitaire - Complete MVP")
+    ).toBeInTheDocument();
 
     // Check for New Game button
-    expect(screen.getByRole("button", { name: /new game/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /new game/i })
+    ).toBeInTheDocument();
 
     // Check for game status
     expect(screen.getByText("Game in Progress")).toBeInTheDocument();

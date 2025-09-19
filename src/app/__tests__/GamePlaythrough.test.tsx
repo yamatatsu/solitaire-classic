@@ -1,17 +1,19 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, expect, it } from "vitest";
-import { App } from "../App";
-import { AppProvider } from "../providers";
 import { useSetAtom } from "jotai";
+import { describe, expect, it } from "vitest";
 import { foundationsAtom } from "@/features/game/stores";
 import type { Card } from "@/features/game/types";
+import { App } from "../App";
+import { AppProvider } from "../providers";
 
 // Helper component to set up a winning game state
 const WinTestComponent = () => {
   const setFoundations = useSetAtom(foundationsAtom);
 
-  const createFullFoundation = (suit: "hearts" | "diamonds" | "clubs" | "spades"): Card[] => {
+  const createFullFoundation = (
+    suit: "hearts" | "diamonds" | "clubs" | "spades"
+  ): Card[] => {
     return Array.from({ length: 13 }, (_, i) => ({
       id: `${suit}-${i + 1}`,
       suit,
@@ -34,7 +36,7 @@ const WinTestComponent = () => {
   return (
     <div>
       <App />
-      <button onClick={triggerWin} data-testid="trigger-win">
+      <button type="button" onClick={triggerWin} data-testid="trigger-win">
         Trigger Win (Test Only)
       </button>
     </div>
@@ -105,13 +107,21 @@ describe("Complete Game Playthrough", () => {
 
     // Should show win dialog - check more flexible text matching
     expect(screen.getByText(/Congratulations!/)).toBeInTheDocument();
-    expect(screen.getByText("You have successfully completed the game!")).toBeInTheDocument();
-    expect(screen.getByText("All cards have been moved to the foundations.")).toBeInTheDocument();
+    expect(
+      screen.getByText("You have successfully completed the game!")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("All cards have been moved to the foundations.")
+    ).toBeInTheDocument();
 
     // Should have Close and New Game buttons in dialog
     const dialogButtons = screen.getAllByRole("button");
-    const closeButton = dialogButtons.find(button => button.textContent === "Close");
-    const newGameButtonInDialog = dialogButtons.find(button => button.textContent === "New Game");
+    const closeButton = dialogButtons.find(
+      (button) => button.textContent === "Close"
+    );
+    const newGameButtonInDialog = dialogButtons.find(
+      (button) => button.textContent === "New Game"
+    );
 
     expect(closeButton).toBeInTheDocument();
     expect(newGameButtonInDialog).toBeInTheDocument();
@@ -149,8 +159,10 @@ describe("Complete Game Playthrough", () => {
 
     // Click New Game button in dialog
     const newGameButtons = screen.getAllByRole("button", { name: /new game/i });
-    const dialogNewGameButton = newGameButtons.find(button =>
-      button.closest('[role="dialog"]') || button.parentElement?.textContent?.includes("Congratulations")
+    const dialogNewGameButton = newGameButtons.find(
+      (button) =>
+        button.closest('[role="dialog"]') ||
+        button.parentElement?.textContent?.includes("Congratulations")
     );
 
     if (dialogNewGameButton) {

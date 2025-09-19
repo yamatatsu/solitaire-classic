@@ -1,8 +1,8 @@
 import type React from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { GameBoard } from "@/features/game/components/GameBoard";
-import { useGameControls, useGameActions } from "@/features/game/hooks";
+import { useGameActions, useGameControls } from "@/features/game/hooks";
+import { cn } from "@/lib/utils";
 import { WinDialog } from "./WinDialog";
 
 interface SolitaireGameProps {
@@ -50,7 +50,9 @@ export const SolitaireGame: React.FC<SolitaireGameProps> = ({ className }) => {
             {/* Game Status */}
             <div className="text-sm text-gray-600">
               {isGameWon ? (
-                <span className="text-green-600 font-semibold">🎉 You Won!</span>
+                <span className="text-green-600 font-semibold">
+                  🎉 You Won!
+                </span>
               ) : (
                 <span>Game in Progress</span>
               )}

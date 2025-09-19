@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@/test/game-test-utils";
-import type { Card } from "../../types";
+import type { Card, Rank } from "../../types";
 import { Tableau } from "../Tableau";
 
 describe("Tableau Component", () => {
@@ -215,7 +215,7 @@ describe("Tableau Component", () => {
       for (let i = 1; i <= 13; i++) {
         manyCardsColumn.push({
           suit: "spades",
-          rank: i as any,
+          rank: i as Rank,
           faceUp: i === 13, // Only last card face up
           id: `spades-${i}`,
         });

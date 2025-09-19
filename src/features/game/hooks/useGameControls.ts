@@ -1,10 +1,6 @@
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useEffect, useState } from "react";
-import {
-  gameStateAtom,
-  isGameWon,
-  resetGameState,
-} from "../stores";
+import { gameStateAtom, isGameWon, resetGameState } from "../stores";
 import { createNewGameState } from "../utils";
 
 /**
@@ -35,7 +31,7 @@ export const useGameControls = () => {
     resetGame({ gameState: newGameState });
     setShowWinMessage(false);
     setWinMessageDismissed(false);
-    setGameId(prev => prev + 1);
+    setGameId((prev) => prev + 1);
   }, [resetGame]);
 
   /**
@@ -53,7 +49,7 @@ export const useGameControls = () => {
     resetGame();
     setShowWinMessage(false);
     setWinMessageDismissed(false);
-    setGameId(prev => prev + 1);
+    setGameId((prev) => prev + 1);
   }, [resetGame]);
 
   return {

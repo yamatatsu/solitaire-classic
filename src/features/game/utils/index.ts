@@ -72,7 +72,9 @@ export const shuffleDeck = (deck: Card[]): Card[] => {
 /**
  * Parses a game location string to extract location type and index
  */
-export const parseGameLocation = (location: string): { type: string; index?: number } => {
+export const parseGameLocation = (
+  location: string
+): { type: string; index?: number } => {
   if (location === "stock" || location === "waste") {
     return { type: location };
   }
@@ -136,7 +138,9 @@ export const createNewGameState = (): {
   }
 
   // Remaining cards go to stock (all face down)
-  const stock = deck.slice(cardIndex).map(card => ({ ...card, faceUp: false }));
+  const stock = deck
+    .slice(cardIndex)
+    .map((card) => ({ ...card, faceUp: false }));
 
   // Empty foundations and waste
   const foundations = Array.from({ length: 4 }, () => [] as Card[]);

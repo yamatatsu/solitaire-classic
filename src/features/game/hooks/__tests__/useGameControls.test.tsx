@@ -1,13 +1,15 @@
-import { render, renderHook, act } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { act, render, renderHook } from "@testing-library/react";
+import { useSetAtom } from "jotai";
+import { describe, expect, it } from "vitest";
 import { GameTestProvider } from "../../../../test/game-test-utils";
-import { useGameControls } from "../useGameControls";
-import { useAtomValue, useSetAtom } from "jotai";
-import { gameStateAtom, isGameWon, foundationsAtom } from "../../stores";
+import { foundationsAtom } from "../../stores";
 import type { Card } from "../../types";
+import { useGameControls } from "../useGameControls";
 
 // Helper to create a full foundation (Ace to King of same suit)
-const createFullFoundation = (suit: "hearts" | "diamonds" | "clubs" | "spades"): Card[] => {
+const createFullFoundation = (
+  suit: "hearts" | "diamonds" | "clubs" | "spades"
+): Card[] => {
   return Array.from({ length: 13 }, (_, i) => ({
     id: `${suit}-${i + 1}`,
     suit,
@@ -50,7 +52,7 @@ describe("useGameControls", () => {
 
     // Check foundations are empty
     expect(gameState.foundations).toHaveLength(4);
-    gameState.foundations.forEach(foundation => {
+    gameState.foundations.forEach((foundation) => {
       expect(foundation).toHaveLength(0);
     });
 
@@ -85,11 +87,11 @@ describe("useGameControls", () => {
     const gameState = result.current.gameState;
 
     // All areas should be empty
-    gameState.tableau.forEach(column => {
+    gameState.tableau.forEach((column) => {
       expect(column).toHaveLength(0);
     });
 
-    gameState.foundations.forEach(foundation => {
+    gameState.foundations.forEach((foundation) => {
       expect(foundation).toHaveLength(0);
     });
 
@@ -122,8 +124,12 @@ describe("useGameControls", () => {
       return (
         <div>
           <div data-testid="win-status">{isGameWon ? "won" : "not-won"}</div>
-          <div data-testid="win-message-status">{showWinMessage ? "shown" : "hidden"}</div>
-          <button onClick={triggerWin} data-testid="trigger-win">Trigger Win</button>
+          <div data-testid="win-message-status">
+            {showWinMessage ? "shown" : "hidden"}
+          </div>
+          <button type="button" onClick={triggerWin} data-testid="trigger-win">
+            Trigger Win
+          </button>
         </div>
       );
     };
@@ -163,11 +169,23 @@ describe("useGameControls", () => {
 
       return (
         <div>
-          <div data-testid="win-status">{controls.isGameWon ? "won" : "not-won"}</div>
-          <div data-testid="win-message-status">{controls.showWinMessage ? "shown" : "hidden"}</div>
+          <div data-testid="win-status">
+            {controls.isGameWon ? "won" : "not-won"}
+          </div>
+          <div data-testid="win-message-status">
+            {controls.showWinMessage ? "shown" : "hidden"}
+          </div>
           <div data-testid="game-id">{controls.gameId}</div>
-          <button onClick={triggerWin} data-testid="trigger-win">Trigger Win</button>
-          <button onClick={controls.dismissWinMessage} data-testid="dismiss-message">Dismiss</button>
+          <button type="button" onClick={triggerWin} data-testid="trigger-win">
+            Trigger Win
+          </button>
+          <button
+            type="button"
+            onClick={controls.dismissWinMessage}
+            data-testid="dismiss-message"
+          >
+            Dismiss
+          </button>
         </div>
       );
     };
@@ -212,9 +230,19 @@ describe("useGameControls", () => {
 
       return (
         <div>
-          <div data-testid="win-message-status">{controls.showWinMessage ? "shown" : "hidden"}</div>
-          <button onClick={triggerWin} data-testid="trigger-win">Trigger Win</button>
-          <button onClick={controls.dismissWinMessage} data-testid="dismiss-message">Dismiss</button>
+          <div data-testid="win-message-status">
+            {controls.showWinMessage ? "shown" : "hidden"}
+          </div>
+          <button type="button" onClick={triggerWin} data-testid="trigger-win">
+            Trigger Win
+          </button>
+          <button
+            type="button"
+            onClick={controls.dismissWinMessage}
+            data-testid="dismiss-message"
+          >
+            Dismiss
+          </button>
         </div>
       );
     };
@@ -287,7 +315,13 @@ describe("useGameControls", () => {
       return (
         <div>
           <div data-testid="win-status">{isGameWon ? "won" : "not-won"}</div>
-          <button onClick={setPartialFoundation} data-testid="set-partial">Set Partial</button>
+          <button
+            type="button"
+            onClick={setPartialFoundation}
+            data-testid="set-partial"
+          >
+            Set Partial
+          </button>
         </div>
       );
     };
@@ -321,10 +355,22 @@ describe("useGameControls", () => {
 
       return (
         <div>
-          <div data-testid="win-status">{controls.isGameWon ? "won" : "not-won"}</div>
-          <div data-testid="win-message-status">{controls.showWinMessage ? "shown" : "hidden"}</div>
-          <button onClick={triggerWin} data-testid="trigger-win">Trigger Win</button>
-          <button onClick={controls.startNewGame} data-testid="new-game">New Game</button>
+          <div data-testid="win-status">
+            {controls.isGameWon ? "won" : "not-won"}
+          </div>
+          <div data-testid="win-message-status">
+            {controls.showWinMessage ? "shown" : "hidden"}
+          </div>
+          <button type="button" onClick={triggerWin} data-testid="trigger-win">
+            Trigger Win
+          </button>
+          <button
+            type="button"
+            onClick={controls.startNewGame}
+            data-testid="new-game"
+          >
+            New Game
+          </button>
         </div>
       );
     };

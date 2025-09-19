@@ -33,10 +33,12 @@ export const WinDialog: React.FC<WinDialogProps> = ({
       />
 
       {/* Modal Content */}
-      <div className={cn(
-        "relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4",
-        "animate-in zoom-in-95 duration-200"
-      )}>
+      <div
+        className={cn(
+          "relative bg-white rounded-lg shadow-xl max-w-md w-full mx-4",
+          "animate-in zoom-in-95 duration-200"
+        )}
+      >
         {/* Header */}
         <div className="p-6 text-center">
           <h2 className="text-2xl font-bold text-green-600 mb-2">
@@ -67,10 +69,7 @@ export const WinDialog: React.FC<WinDialogProps> = ({
           >
             Close
           </Button>
-          <Button
-            onClick={handleNewGame}
-            className="w-full sm:w-auto"
-          >
+          <Button onClick={handleNewGame} className="w-full sm:w-auto">
             New Game
           </Button>
         </div>

@@ -1,8 +1,8 @@
 import { act, renderHook } from "@testing-library/react";
 import { Provider } from "jotai";
 import type { ReactNode } from "react";
-import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
-import type { Card, DragData, DropTarget } from "../../types";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { Card } from "../../types";
 import { useDragAndDrop } from "../useDragAndDrop";
 
 // Mock navigator.vibrate
@@ -52,9 +52,12 @@ describe("useDragAndDrop", () => {
 
   describe("HTML5 Drag and Drop", () => {
     it("should handle drag start correctly", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockDataTransfer = {
         effectAllowed: "",
@@ -67,7 +70,12 @@ describe("useDragAndDrop", () => {
       } as unknown as DragEvent;
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.dragState.isDragging).toBe(true);
@@ -103,7 +111,12 @@ describe("useDragAndDrop", () => {
       } as unknown as DragEvent;
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockDragEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockDragEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.dragState.isDragging).toBe(true);
@@ -131,13 +144,16 @@ describe("useDragAndDrop", () => {
       result.current.dragHandlers.onDragOver(mockEvent);
 
       expect(mockEvent.preventDefault).toHaveBeenCalled();
-      expect(mockEvent.dataTransfer!.dropEffect).toBe("move");
+      expect(mockEvent.dataTransfer?.dropEffect).toBe("move");
     });
 
     it("should handle drop when drag is active and drop is valid", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       // Start drag first
       const mockDataTransfer = {
@@ -150,7 +166,12 @@ describe("useDragAndDrop", () => {
       } as unknown as DragEvent;
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockDragEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockDragEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       // Mock isValidDrop to return true
@@ -190,9 +211,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should handle touch start and initiate long press detection", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockTouchEvent = {
         touches: [{ clientX: 100, clientY: 200 }],
@@ -200,7 +224,12 @@ describe("useDragAndDrop", () => {
       } as unknown as TouchEvent;
 
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchEvent, mockCard, "tableau-0", 0);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.touchState.isTouching).toBe(true);
@@ -215,9 +244,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should initiate drag after long press timeout", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockTouchEvent = {
         touches: [{ clientX: 100, clientY: 200 }],
@@ -225,7 +257,12 @@ describe("useDragAndDrop", () => {
       } as unknown as TouchEvent;
 
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchEvent, mockCard, "tableau-0", 0);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.dragState.isDragging).toBe(false);
@@ -245,9 +282,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should cancel long press if touch moves too much", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockTouchStartEvent = {
         touches: [{ clientX: 100, clientY: 200 }],
@@ -255,7 +295,12 @@ describe("useDragAndDrop", () => {
       } as unknown as TouchEvent;
 
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchStartEvent, mockCard, "tableau-0", 0);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchStartEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       // Move touch beyond threshold
@@ -277,9 +322,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should handle touch end and execute card move for drag operations", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockTouchEvent = {
         touches: [{ clientX: 100, clientY: 200 }],
@@ -288,7 +336,12 @@ describe("useDragAndDrop", () => {
 
       // Start touch and wait for long press
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchEvent, mockCard, "tableau-0", 0);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       act(() => {
@@ -315,9 +368,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should handle touch end as card flip for tap operations", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardFlip: mockOnCardFlip }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardFlip: mockOnCardFlip }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockElement = document.createElement("div");
       mockElement.setAttribute("data-location", "tableau-0");
@@ -330,7 +386,12 @@ describe("useDragAndDrop", () => {
 
       // Start touch
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchEvent, mockCard, "tableau-0", 2);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchEvent,
+          mockCard,
+          "tableau-0",
+          2
+        );
       });
 
       // End touch quickly (no long press)
@@ -370,7 +431,12 @@ describe("useDragAndDrop", () => {
       } as unknown as DragEvent;
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.isValidDrop("tableau-0")).toBe(false);
@@ -392,7 +458,12 @@ describe("useDragAndDrop", () => {
       } as unknown as DragEvent;
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       expect(result.current.isValidDrop("stock")).toBe(false);
@@ -402,9 +473,12 @@ describe("useDragAndDrop", () => {
 
   describe("Performance", () => {
     it("should respond to drag start within performance threshold", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockDataTransfer = {
         effectAllowed: "",
@@ -418,7 +492,12 @@ describe("useDragAndDrop", () => {
       const startTime = performance.now();
 
       act(() => {
-        result.current.dragHandlers.onDragStart(mockEvent, mockCard, "tableau-0", 0);
+        result.current.dragHandlers.onDragStart(
+          mockEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       const endTime = performance.now();
@@ -430,9 +509,12 @@ describe("useDragAndDrop", () => {
     });
 
     it("should respond to touch start within performance threshold", () => {
-      const { result } = renderHook(() => useDragAndDrop({ onCardMove: mockOnCardMove }), {
-        wrapper: TestWrapper,
-      });
+      const { result } = renderHook(
+        () => useDragAndDrop({ onCardMove: mockOnCardMove }),
+        {
+          wrapper: TestWrapper,
+        }
+      );
 
       const mockTouchEvent = {
         touches: [{ clientX: 100, clientY: 200 }],
@@ -442,7 +524,12 @@ describe("useDragAndDrop", () => {
       const startTime = performance.now();
 
       act(() => {
-        result.current.touchHandlers.onTouchStart(mockTouchEvent, mockCard, "tableau-0", 0);
+        result.current.touchHandlers.onTouchStart(
+          mockTouchEvent,
+          mockCard,
+          "tableau-0",
+          0
+        );
       });
 
       const endTime = performance.now();

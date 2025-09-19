@@ -2,7 +2,20 @@
 
 // Re-export types for convenience
 export type { Card, GameState, MoveAction, ValidationResult } from "../types";
-
+// Drag and drop atoms and actions
+export {
+  dragStateAtom,
+  endDragAtom,
+  endTouchAtom,
+  isInteractingAtom,
+  setDragPreviewAtom,
+  setTouchTargetAtom,
+  startDragAtom,
+  startTouchAtom,
+  touchStateAtom,
+  updateDropTargetAtom,
+  updateTouchAtom,
+} from "./dragDrop";
 // Foundations atoms and actions
 export {
   addCardToFoundation,
@@ -37,17 +50,3 @@ export {
   removeCardFromWaste,
   wasteAtom,
 } from "./waste";
-// Drag and drop atoms and actions
-export {
-  dragStateAtom,
-  endDragAtom,
-  endTouchAtom,
-  isInteractingAtom,
-  setDragPreviewAtom,
-  setTouchTargetAtom,
-  startDragAtom,
-  startTouchAtom,
-  touchStateAtom,
-  updateDropTargetAtom,
-  updateTouchAtom,
-} from "./dragDrop";

@@ -40,20 +40,29 @@ export const Tableau: React.FC<TableauProps> = ({
     onColumnClick?.(columnIndex);
   };
 
+  const handleKeyDown =
+    (columnIndex: number) => (event: React.KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        onColumnClick?.(columnIndex);
+      }
+    };
+
   return (
-    <div
+    <section
       className={cn(
         "grid grid-cols-7 gap-2 w-full",
         "sm:gap-3 md:gap-4",
         className
       )}
       data-testid={testId || "tableau"}
-      role="region"
       aria-label="Tableau - seven columns of cards"
     >
       {columns.map((column, columnIndex) => (
-        <div
-          key={columnIndex}
+        <button
+          // biome-ignore lint/suspicious/noArrayIndexKey: length of the columns array is fixed, and never changes
+          key={`tableau-column-${columnIndex}`}
+          type="button"
           className={cn(
             "flex flex-col min-h-[120px] relative",
             "bg-green-100 border-2 border-dashed border-green-300 rounded-lg",
@@ -61,9 +70,8 @@ export const Tableau: React.FC<TableauProps> = ({
             "p-1 min-h-[44px]" // Ensure touch target
           )}
           onClick={(event) => handleColumnClick(columnIndex, event)}
+          onKeyDown={handleKeyDown(columnIndex)}
           data-testid={`tableau-column-${columnIndex}`}
-          role="button"
-          tabIndex={0}
           aria-label={`Tableau column ${columnIndex + 1}, ${column.length} cards`}
         >
           {column.length === 0 ? (
@@ -105,8 +113,8 @@ export const Tableau: React.FC<TableauProps> = ({
               })}
             </div>
           )}
-        </div>
+        </button>
       ))}
-    </div>
+    </section>
   );
 };

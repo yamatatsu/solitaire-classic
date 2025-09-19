@@ -1,5 +1,5 @@
-import type React from "react";
 import { Provider } from "jotai";
+import type React from "react";
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -10,9 +10,5 @@ interface AppProviderProps {
  * Currently provides Jotai store for game state management
  */
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  return (
-    <Provider>
-      {children}
-    </Provider>
-  );
+  return <Provider>{children}</Provider>;
 };

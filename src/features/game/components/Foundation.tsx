@@ -56,15 +56,22 @@ export const Foundation: React.FC<FoundationProps> = ({
     onCardClick?.(cardId, foundationIndex);
   };
 
+  const handleKeyDown =
+    (foundationIndex: number) => (event: React.KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        onFoundationClick?.(foundationIndex);
+      }
+    };
+
   return (
-    <div
+    <section
       className={cn(
         "grid grid-cols-4 gap-2 w-full max-w-sm",
         "sm:gap-3 md:gap-4",
         className
       )}
       data-testid={testId || "foundation"}
-      role="region"
       aria-label="Foundation piles - build suits from Ace to King"
     >
       {suits.map((suit, foundationIndex) => {
@@ -72,8 +79,9 @@ export const Foundation: React.FC<FoundationProps> = ({
         const topCard = pile[pile.length - 1];
 
         return (
-          <div
+          <button
             key={suit}
+            type="button"
             className={cn(
               "relative flex items-center justify-center",
               "w-16 h-24 min-h-[44px] min-w-[44px]", // Ensure touch targets
@@ -82,9 +90,8 @@ export const Foundation: React.FC<FoundationProps> = ({
               "shadow-sm"
             )}
             onClick={(event) => handleFoundationClick(foundationIndex, event)}
+            onKeyDown={handleKeyDown(foundationIndex)}
             data-testid={`foundation-pile-${foundationIndex}`}
-            role="button"
-            tabIndex={0}
             aria-label={`${suit} foundation pile, ${pile.length} cards`}
           >
             {topCard ? (
@@ -105,9 +112,9 @@ export const Foundation: React.FC<FoundationProps> = ({
                 </div>
               </div>
             )}
-          </div>
+          </button>
         );
       })}
-    </div>
+    </section>
   );
 };

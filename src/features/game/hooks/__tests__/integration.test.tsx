@@ -12,7 +12,11 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 );
 
 describe("Hooks Integration", () => {
-  const createMockCard = (suit: string, rank: number, faceUp = false): Card => ({
+  const createMockCard = (
+    suit: string,
+    rank: number,
+    faceUp = false
+  ): Card => ({
     id: `${suit}-${rank}`,
     suit: suit as Card["suit"],
     rank: rank as Card["rank"],
@@ -24,19 +28,27 @@ describe("Hooks Integration", () => {
     const mockOnCardFlip = vi.fn();
     const mockOnStockClick = vi.fn();
 
-    const { result: dragResult } = renderHook(() => useDragAndDrop({
-      onCardMove: mockOnCardMove,
-      onCardFlip: mockOnCardFlip,
-    }), {
-      wrapper: TestWrapper,
-    });
+    const { result: dragResult } = renderHook(
+      () =>
+        useDragAndDrop({
+          onCardMove: mockOnCardMove,
+          onCardFlip: mockOnCardFlip,
+        }),
+      {
+        wrapper: TestWrapper,
+      }
+    );
 
-    const { result: stockResult } = renderHook(() => useStockPile({
-      drawCount: 3,
-      onStockClick: mockOnStockClick,
-    }), {
-      wrapper: TestWrapper,
-    });
+    const { result: stockResult } = renderHook(
+      () =>
+        useStockPile({
+          drawCount: 3,
+          onStockClick: mockOnStockClick,
+        }),
+      {
+        wrapper: TestWrapper,
+      }
+    );
 
     // Both hooks should initialize properly
     expect(dragResult.current.dragState.isDragging).toBe(false);
@@ -44,7 +56,9 @@ describe("Hooks Integration", () => {
 
     // Should have all necessary handlers
     expect(typeof dragResult.current.dragHandlers.onDragStart).toBe("function");
-    expect(typeof dragResult.current.touchHandlers.onTouchStart).toBe("function");
+    expect(typeof dragResult.current.touchHandlers.onTouchStart).toBe(
+      "function"
+    );
     expect(typeof stockResult.current.drawFromStock).toBe("function");
   });
 
@@ -52,17 +66,25 @@ describe("Hooks Integration", () => {
     const mockOnCardMove = vi.fn();
     const mockOnStockClick = vi.fn();
 
-    const { result: dragResult } = renderHook(() => useDragAndDrop({
-      onCardMove: mockOnCardMove,
-    }), {
-      wrapper: TestWrapper,
-    });
+    const { result: dragResult } = renderHook(
+      () =>
+        useDragAndDrop({
+          onCardMove: mockOnCardMove,
+        }),
+      {
+        wrapper: TestWrapper,
+      }
+    );
 
-    const { result: stockResult } = renderHook(() => useStockPile({
-      onStockClick: mockOnStockClick,
-    }), {
-      wrapper: TestWrapper,
-    });
+    const { result: stockResult } = renderHook(
+      () =>
+        useStockPile({
+          onStockClick: mockOnStockClick,
+        }),
+      {
+        wrapper: TestWrapper,
+      }
+    );
 
     // Test card creation and validation
     const testCard = createMockCard("hearts", 1, true);
@@ -83,7 +105,12 @@ describe("Hooks Integration", () => {
     } as unknown as DragEvent;
 
     act(() => {
-      dragResult.current.dragHandlers.onDragStart(mockEvent, testCard, "waste", 0);
+      dragResult.current.dragHandlers.onDragStart(
+        mockEvent,
+        testCard,
+        "waste",
+        0
+      );
     });
 
     expect(dragResult.current.dragState.isDragging).toBe(true);
@@ -101,12 +128,16 @@ describe("Hooks Integration", () => {
     const mockOnCardMove = vi.fn();
     const mockOnCardFlip = vi.fn();
 
-    const { result } = renderHook(() => useDragAndDrop({
-      onCardMove: mockOnCardMove,
-      onCardFlip: mockOnCardFlip,
-    }), {
-      wrapper: TestWrapper,
-    });
+    const { result } = renderHook(
+      () =>
+        useDragAndDrop({
+          onCardMove: mockOnCardMove,
+          onCardFlip: mockOnCardFlip,
+        }),
+      {
+        wrapper: TestWrapper,
+      }
+    );
 
     const testCard = createMockCard("spades", 13, true); // King of Spades
 
@@ -118,7 +149,12 @@ describe("Hooks Integration", () => {
     const startTime = performance.now();
 
     act(() => {
-      result.current.touchHandlers.onTouchStart(mockTouchEvent, testCard, "tableau-0", 0);
+      result.current.touchHandlers.onTouchStart(
+        mockTouchEvent,
+        testCard,
+        "tableau-0",
+        0
+      );
     });
 
     const endTime = performance.now();
