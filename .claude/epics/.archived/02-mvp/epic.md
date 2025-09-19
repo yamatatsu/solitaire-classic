@@ -1,9 +1,10 @@
 ---
 name: 02-mvp
-status: backlog
+status: completed
 created: 2025-09-19T06:50:41Z
-updated: 2025-09-19T08:01:36Z
-progress: 0%
+updated: 2025-09-19T14:09:40Z
+progress: 100%
+completed: 2025-09-19T14:09:40Z
 prd: .claude/prds/02-mvp.md
 github: https://github.com/yamatatsu/solitaire-classic/issues/7
 ---

@@ -1,8 +1,9 @@
 ---
 name: 02-mvp
 description: Minimum viable product for Klondike solitaire game with basic functionality and shadcn UI setup
-status: backlog
+status: completed
 created: 2025-09-19T06:19:37Z
+completed: 2025-09-19T14:09:40Z
 ---
 
 # PRD: 02-mvp
