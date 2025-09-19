@@ -1,63 +1,63 @@
 ---
 name: init_react_project
-description: Initialize a React-based Solitaire Classic browser game with Vite and TypeScript
+description: Initialize a minimal hello-world React application with Vite and TypeScript
 status: backlog
 created: 2025-09-16T13:02:46Z
-updated: 2025-09-16T13:19:29Z
+updated: 2025-09-19T03:51:54Z
 ---
 
 # PRD: init_react_project
 
 ## Executive Summary
 
-This PRD outlines the requirements for initializing a React-based Solitaire Classic browser game project. The project will be built using modern web technologies including Vite, TypeScript, and React, designed to run as a single-page application on GitHub Pages. The game will provide a classic solitaire card game experience with smooth animations, responsive design, and an intuitive user interface.
+This PRD outlines the requirements for initializing a minimal hello-world React application. The project will be built using modern web technologies including Vite, TypeScript, and React, designed to run as a single-page application on GitHub Pages. The application will serve as a foundation and starting point for future development, demonstrating basic React functionality with a clean, professional setup.
 
 ## Problem Statement
 
 ### What problem are we solving?
-Many existing online solitaire games are cluttered with ads, require internet connectivity for basic functionality, or lack a clean, modern interface. Users want a simple, fast-loading, ad-free solitaire game that works offline once loaded and provides a pleasant gaming experience.
+Many React projects start with complex boilerplate or unnecessary dependencies that slow down initial development. Developers need a clean, minimal starting point that demonstrates modern React development practices with proper tooling setup.
 
 ### Why is this important now?
-- Browser-based games have become increasingly popular for casual gaming
+- Modern React development requires proper tooling configuration
 - GitHub Pages provides free, reliable hosting for static sites
-- Modern web technologies enable smooth, native-like gaming experiences in browsers
-- There's a demand for clean, distraction-free implementations of classic games
+- TypeScript adoption is increasing for better development experience
+- Clean project initialization saves time and reduces technical debt
 
 ## User Stories
 
 ### Primary User Personas
 
-**Casual Gamer**
-- Wants to play solitaire during breaks or downtime
-- Values quick loading times and no setup required
-- Prefers clean, intuitive interfaces without distractions
+**Developer**
+- Wants to start a new React project quickly
+- Values modern tooling and best practices
+- Needs a clean foundation to build upon
 
-**Solitaire Enthusiast**
-- Plays regularly and wants a reliable, bug-free experience
-- Appreciates game statistics and tracking
-- Values smooth animations and responsive controls
+**Project Stakeholder**
+- Wants to see the project setup and initial deployment
+- Values quick feedback and visible progress
+- Needs confidence in the technical foundation
 
 ### Detailed User Journeys
 
-**First-Time Player**
-1. User discovers game link (GitHub Pages URL)
-2. Game loads quickly in their browser
-3. Instructions are clear or game is intuitive enough to start immediately
-4. User can start playing within seconds
-5. Game state persists if they need to leave and return
+**Developer Experience**
+1. Developer clones or views the project repository
+2. Application loads quickly with clear "Hello World" message
+3. Code structure is clean and well-organized
+4. Development server starts quickly and hot-reloads work
+5. Build process produces optimized output
 
-**Returning Player**
-1. User bookmarks or remembers the game URL
-2. Game loads with their previous statistics intact
-3. Can immediately start a new game or resume if one was in progress
-4. Settings and preferences are remembered
+**Stakeholder Experience**
+1. Stakeholder visits the deployed application URL
+2. Application loads quickly showing professional hello-world page
+3. Can verify the technical foundation is solid
+4. Sees evidence of proper tooling and setup
 
 ### Pain Points Being Addressed
-- Slow-loading games with heavy assets
-- Intrusive advertisements disrupting gameplay
-- Poor mobile responsiveness
-- Lost game progress on refresh
-- Confusing or cluttered interfaces
+- Complex project initialization
+- Slow development server startup
+- Poor build tool configuration
+- Missing TypeScript setup
+- Lack of professional presentation
 
 ## Requirements
 
@@ -65,71 +65,66 @@ Many existing online solitaire games are cluttered with ads, require internet co
 
 #### Core Features and Capabilities
 
-**Game Initialization**
-- Set up standard 52-card deck
-- Implement classic Solitaire (Klondike) rules
-- Deal cards in proper formation (7 tableau piles, stock pile)
-- Initialize empty foundation piles (4 suits)
-
-**Game Mechanics**
-- Drag and drop card movement
-- Click to auto-move cards to foundations
-- Draw cards from stock (1 or 3 card draw options)
-- Validate legal moves according to solitaire rules
-- Auto-complete when possible
-- Undo/Redo functionality
+**Application Structure**
+- Clean React component hierarchy
+- Proper TypeScript type definitions
+- Modern ES6+ JavaScript syntax
+- Component-based architecture
 
 **User Interface**
-- Responsive card layout that adapts to screen size
-- Visual feedback for valid/invalid moves
-- Card animations for dealing, moving, and flipping
-- Score display and move counter
-- Timer for game duration
-- New game button
-- Settings menu
+- Professional hello-world landing page
+- Responsive design that works on all devices
+- Clean, modern styling with Tailwind CSS
+- Proper semantic HTML structure
 
-**Game State Management**
-- Save game state to localStorage
-- Resume interrupted games
-- Track statistics (games won, best time, win streak)
-- Reset statistics option
+**Development Experience**
+- Fast development server with hot-reload
+- TypeScript error checking
+- Code formatting with Biome
+- Git hooks for quality checks
+
+**Build and Deployment**
+- Optimized production builds
+- Static asset optimization
+- GitHub Pages deployment
+- Automated CI/CD pipeline
 
 ### Non-Functional Requirements
 
 #### Performance Expectations
-- Initial load time under 3 seconds on 3G connection
-- Smooth animations at 60 FPS
-- Instant response to user interactions (<100ms)
-- Minimal memory footprint
-- Works on devices with limited resources
+- Initial load time under 2 seconds
+- Lighthouse Performance Score > 95
+- Time to Interactive < 1s
+- Minimal bundle size
+- Works on all modern browsers
 
 #### Security Considerations
-- No server-side dependencies for core gameplay
-- All data stored locally in browser
-- No user authentication required
-- No sensitive data collection
+- No server-side dependencies
+- No user data collection
+- No external API calls
+- Secure static site hosting
 
 #### Scalability Needs
 - Static site architecture for easy deployment
 - CDN-friendly asset structure
-- Modular code architecture for feature additions
-- Efficient bundling and code splitting
+- Modular code architecture for future additions
+- Efficient bundling configuration
 
 ## Success Criteria
 
 ### Measurable Outcomes
-- Game loads and is playable within 3 seconds
+- Application loads and displays within 2 seconds
 - Zero runtime errors in production
-- 100% of standard solitaire moves are correctly implemented
-- Game works on all major browsers (Chrome, Firefox, Safari, Edge)
+- TypeScript compilation with zero errors
+- Works on all major browsers (Chrome, Firefox, Safari, Edge)
 - Responsive design works on screens from 320px to 4K
 
 ### Key Metrics and KPIs
-- Page load time < 3 seconds
-- Time to interactive < 2 seconds
-- Lighthouse performance score > 90
+- Page load time < 2 seconds
+- Time to interactive < 1 second
+- Lighthouse performance score > 95
 - Zero accessibility violations (WCAG AA)
-- 100% offline functionality after initial load
+- Bundle size < 100KB gzipped
 
 ## Constraints & Assumptions
 
@@ -157,18 +152,18 @@ Many existing online solitaire games are cluttered with ads, require internet co
 ## Out of Scope
 
 **Explicitly NOT building in this phase:**
-- Multiple solitaire variants (Spider, FreeCell, etc.)
-- Multiplayer or competitive features
-- User accounts or cloud save
-- Social features (sharing, leaderboards)
-- Monetization features
+- Complex UI components or layouts
+- User authentication or accounts
+- Database or backend services
+- Advanced state management (Redux, Zustand)
+- Routing or navigation
+- Form handling or validation
+- API integrations
+- Complex animations or transitions
 - Mobile app versions
-- Backend services
-- Advanced animations or 3D graphics
-- Sound effects and music (initial version)
-- Customizable card backs and themes (initial version)
-- Hints system
-- Tutorial mode
+- Advanced testing beyond basic setup
+- Internationalization (i18n)
+- Complex build optimizations
 
 ## Dependencies
 
@@ -182,9 +177,9 @@ Many existing online solitaire games are cluttered with ads, require internet co
 
 **Core Technologies**
 - Vite - Build tool and dev server
-- React 18+ - UI framework
+- React v19 - Latest UI framework with new features
 - TypeScript - Type safety and better DX
-- Jotai - State management
+- Jotai - State management (for future use)
 - TanStack Router - Routing (for potential future pages)
 
 **UI and Styling**
@@ -207,18 +202,15 @@ Many existing online solitaire games are cluttered with ads, require internet co
 ```
 src/
   ├── components/     # React components
-  ├── game/          # Game logic and rules
-  ├── hooks/         # Custom React hooks
-  ├── stores/        # Jotai atoms and state
-  ├── styles/        # Global styles and Tailwind config
-  ├── types/         # TypeScript type definitions
-  └── utils/         # Helper functions
+  ├── styles/         # Global styles and Tailwind config
+  ├── types/          # TypeScript type definitions
+  └── utils/          # Helper functions (if needed)
 ```
 
 ### Build and Deployment
 - Vite for fast development and optimized production builds
 - GitHub Actions for automated deployment to GitHub Pages
-- Asset optimization and lazy loading where appropriate
+- Basic asset optimization
 
 ## Next Steps
 
@@ -227,8 +219,7 @@ After PRD approval:
 2. Set up development environment
 3. Initialize Vite project with TypeScript
 4. Configure all development tools
-5. Create basic game structure
-6. Implement core game logic
-7. Build UI components
-8. Add animations and polish
-9. Deploy to GitHub Pages
+5. Create hello-world React component
+6. Apply basic styling
+7. Set up deployment pipeline
+8. Deploy to GitHub Pages
