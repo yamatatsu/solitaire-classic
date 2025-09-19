@@ -7,7 +7,6 @@ export type Color = "red" | "black";
 export interface Card {
   suit: Suit;
   rank: Rank;
-  color: Color;
   faceUp: boolean;
   id: string;
 }

@@ -19,7 +19,6 @@ describe("useStockPile", () => {
     id: `${suit}-${rank}`,
     suit: suit as Card["suit"],
     rank: rank as Card["rank"],
-    color: (suit === "hearts" || suit === "diamonds") ? "red" : "black",
     faceUp,
   });
 

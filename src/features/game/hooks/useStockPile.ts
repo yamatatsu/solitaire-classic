@@ -78,13 +78,13 @@ export const useStockPile = ({
 
     // Remove cards from stock (from the end)
     for (let i = 0; i < cardsToTake; i++) {
-      removeFromStock(stock.length - 1 - i);
+      removeFromStock({ count: 1 });
     }
 
     // Add cards to waste (flip them face up)
     drawnCards.forEach(card => {
       const flippedCard: Card = { ...card, faceUp: true };
-      addToWaste(flippedCard);
+      addToWaste({ card: flippedCard });
     });
 
     // Call optional callback
@@ -118,7 +118,7 @@ export const useStockPile = ({
     // Add cards back to stock face down
     wasteCards.forEach(card => {
       const faceDownCard: Card = { ...card, faceUp: false };
-      addToStock(faceDownCard);
+      addToStock({ card: faceDownCard, faceDown: true });
     });
 
     // Call optional callback

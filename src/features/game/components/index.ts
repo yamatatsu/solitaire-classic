@@ -5,3 +5,4 @@ export { GameBoard } from "./GameBoard";
 export { Stock } from "./Stock";
 export { Tableau } from "./Tableau";
 export { Waste } from "./Waste";
+export { DragDropDemo, DragDropDemoWithProvider } from "./DragDropDemo";

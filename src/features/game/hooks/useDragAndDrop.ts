@@ -71,7 +71,7 @@ export const useDragAndDrop = ({
   const [, endTouch] = useAtom(endTouchAtom);
   const [, setTouchTarget] = useAtom(setTouchTargetAtom);
 
-  const touchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const touchTimeoutRef = useRef<number | null>(null);
   const longPressRef = useRef<boolean>(false);
 
   // Validate drop location based on game rules

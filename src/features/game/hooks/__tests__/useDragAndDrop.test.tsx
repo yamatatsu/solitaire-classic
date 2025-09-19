@@ -25,7 +25,6 @@ describe("useDragAndDrop", () => {
     id: "hearts-1",
     suit: "hearts",
     rank: 1,
-    color: "red",
     faceUp: true,
   };
 

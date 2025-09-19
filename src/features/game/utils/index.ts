@@ -49,7 +49,6 @@ export const createDeck = (): Card[] => {
         id: createCardId(suit, rank),
         suit,
         rank: rank as Card["rank"],
-        color: getCardColor({ suit } as Card),
         faceUp: false,
       });
     }

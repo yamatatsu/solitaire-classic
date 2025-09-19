@@ -9,6 +9,11 @@ interface CardProps {
   draggable?: boolean;
   size?: "small" | "medium" | "large";
   "data-testid"?: string;
+  onDragStart?: (event: React.DragEvent) => void;
+  onDragEnd?: (event: React.DragEvent) => void;
+  onTouchStart?: (event: React.TouchEvent) => void;
+  onTouchMove?: (event: React.TouchEvent) => void;
+  onTouchEnd?: (event: React.TouchEvent) => void;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -18,6 +23,11 @@ export const Card: React.FC<CardProps> = ({
   draggable = false,
   size = "medium",
   "data-testid": testId,
+  onDragStart,
+  onDragEnd,
+  onTouchStart,
+  onTouchMove,
+  onTouchEnd,
 }) => {
   const isRed = card.suit === "hearts" || card.suit === "diamonds";
 
@@ -76,6 +86,12 @@ export const Card: React.FC<CardProps> = ({
           className
         )}
         onClick={onClick}
+        draggable={draggable}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
         role="button"
         tabIndex={onClick ? 0 : -1}
         data-testid={testId || "card-back"}
@@ -99,6 +115,11 @@ export const Card: React.FC<CardProps> = ({
       )}
       onClick={onClick}
       draggable={draggable}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
       role="button"
       tabIndex={onClick ? 0 : -1}
       data-testid={testId || "card-face"}

@@ -16,7 +16,6 @@ describe("Hooks Integration", () => {
     id: `${suit}-${rank}`,
     suit: suit as Card["suit"],
     rank: rank as Card["rank"],
-    color: (suit === "hearts" || suit === "diamonds") ? "red" : "black",
     faceUp,
   });
 
@@ -67,7 +66,7 @@ describe("Hooks Integration", () => {
 
     // Test card creation and validation
     const testCard = createMockCard("hearts", 1, true);
-    expect(testCard.color).toBe("red");
+    expect(testCard.suit).toBe("hearts");
     expect(testCard.faceUp).toBe(true);
 
     // Test drag validation
