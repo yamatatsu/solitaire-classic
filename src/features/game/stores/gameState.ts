@@ -1,9 +1,9 @@
-import { atom } from 'jotai';
-import type { GameState } from '../types';
-import { tableauAtom } from './tableau';
-import { foundationsAtom } from './foundations';
-import { stockAtom } from './stock';
-import { wasteAtom } from './waste';
+import { atom } from "jotai";
+import type { GameState } from "../types";
+import { foundationsAtom } from "./foundations";
+import { stockAtom } from "./stock";
+import { tableauAtom } from "./tableau";
+import { wasteAtom } from "./waste";
 
 // Derived atom that combines all game state atoms
 export const gameStateAtom = atom<GameState>((get) => {
@@ -11,7 +11,7 @@ export const gameStateAtom = atom<GameState>((get) => {
     tableau: get(tableauAtom),
     foundations: get(foundationsAtom),
     stock: get(stockAtom),
-    waste: get(wasteAtom)
+    waste: get(wasteAtom),
   };
 });
 
@@ -22,19 +22,26 @@ export const resetGameState = atom(
     if (gameState) {
       // Validate the provided game state
       if (!Array.isArray(gameState.tableau) || gameState.tableau.length !== 7) {
-        throw new Error('Invalid game state: tableau must have exactly 7 columns');
+        throw new Error(
+          "Invalid game state: tableau must have exactly 7 columns"
+        );
       }
 
-      if (!Array.isArray(gameState.foundations) || gameState.foundations.length !== 4) {
-        throw new Error('Invalid game state: foundations must have exactly 4 piles');
+      if (
+        !Array.isArray(gameState.foundations) ||
+        gameState.foundations.length !== 4
+      ) {
+        throw new Error(
+          "Invalid game state: foundations must have exactly 4 piles"
+        );
       }
 
       if (!Array.isArray(gameState.stock)) {
-        throw new Error('Invalid game state: stock must be an array');
+        throw new Error("Invalid game state: stock must be an array");
       }
 
       if (!Array.isArray(gameState.waste)) {
-        throw new Error('Invalid game state: waste must be an array');
+        throw new Error("Invalid game state: waste must be an array");
       }
 
       // Set all atoms to the provided state
@@ -44,8 +51,14 @@ export const resetGameState = atom(
       set(wasteAtom, gameState.waste);
     } else {
       // Reset to initial empty state
-      set(tableauAtom, Array.from({ length: 7 }, () => []));
-      set(foundationsAtom, Array.from({ length: 4 }, () => []));
+      set(
+        tableauAtom,
+        Array.from({ length: 7 }, () => [])
+      );
+      set(
+        foundationsAtom,
+        Array.from({ length: 4 }, () => [])
+      );
       set(stockAtom, []);
       set(wasteAtom, []);
     }
@@ -57,7 +70,7 @@ export const isGameWon = atom<boolean>((get) => {
   const foundations = get(foundationsAtom);
 
   // Game is won when all 4 foundations have complete sequences (Ace to King)
-  return foundations.every(foundation => {
+  return foundations.every((foundation) => {
     if (foundation.length !== 13) {
       return false;
     }

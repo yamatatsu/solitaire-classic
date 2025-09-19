@@ -1,5 +1,5 @@
 // Game logic and validation utilities
-import type { Card, Suit } from '../types';
+import type { Card, Suit } from "../types";
 
 /**
  * Creates a unique ID for a card based on its suit and rank
@@ -12,14 +12,14 @@ export const createCardId = (suit: Suit, rank: number): string => {
  * Checks if a card is red (hearts or diamonds)
  */
 export const isRedCard = (card: Card): boolean => {
-  return card.suit === 'hearts' || card.suit === 'diamonds';
+  return card.suit === "hearts" || card.suit === "diamonds";
 };
 
 /**
  * Checks if a card is black (clubs or spades)
  */
 export const isBlackCard = (card: Card): boolean => {
-  return card.suit === 'clubs' || card.suit === 'spades';
+  return card.suit === "clubs" || card.suit === "spades";
 };
 
 /**
@@ -27,4 +27,78 @@ export const isBlackCard = (card: Card): boolean => {
  */
 export const hasAlternatingColors = (card1: Card, card2: Card): boolean => {
   return isRedCard(card1) !== isRedCard(card2);
+};
+
+/**
+ * Gets the color of a card for the color property
+ */
+export const getCardColor = (card: Card): "red" | "black" => {
+  return card.suit === "hearts" || card.suit === "diamonds" ? "red" : "black";
+};
+
+/**
+ * Creates a standard 52-card deck
+ */
+export const createDeck = (): Card[] => {
+  const suits: Suit[] = ["hearts", "diamonds", "clubs", "spades"];
+  const deck: Card[] = [];
+
+  suits.forEach((suit) => {
+    for (let rank = 1; rank <= 13; rank++) {
+      deck.push({
+        id: createCardId(suit, rank),
+        suit,
+        rank: rank as Card["rank"],
+        color: getCardColor({ suit } as Card),
+        faceUp: false,
+      });
+    }
+  });
+
+  return deck;
+};
+
+/**
+ * Shuffles an array of cards using Fisher-Yates algorithm
+ */
+export const shuffleDeck = (deck: Card[]): Card[] => {
+  const shuffled = [...deck];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+/**
+ * Parses a game location string to extract location type and index
+ */
+export const parseGameLocation = (location: string): { type: string; index?: number } => {
+  if (location === "stock" || location === "waste") {
+    return { type: location };
+  }
+
+  const [type, indexStr] = location.split("-");
+  const index = parseInt(indexStr, 10);
+
+  if (isNaN(index)) {
+    throw new Error(`Invalid location format: ${location}`);
+  }
+
+  return { type, index };
+};
+
+/**
+ * Creates a game location string from type and optional index
+ */
+export const createGameLocation = (type: string, index?: number): string => {
+  if (type === "stock" || type === "waste") {
+    return type;
+  }
+
+  if (index === undefined) {
+    throw new Error(`Index required for location type: ${type}`);
+  }
+
+  return `${type}-${index}`;
 };

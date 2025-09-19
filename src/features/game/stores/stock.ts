@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
-import type { Card } from '../types';
+import { atom } from "jotai";
+import type { Card } from "../types";
 
 // Initialize empty stock pile
 const initialStock: Card[] = [];
@@ -31,9 +31,9 @@ export const addCardToStock = atom(
       let cardsToAdd: Card[];
 
       if (payload.faceDown === true) {
-        cardsToAdd = payload.cards.map(card => ({ ...card, faceUp: false }));
+        cardsToAdd = payload.cards.map((card) => ({ ...card, faceUp: false }));
       } else if (payload.faceDown === false) {
-        cardsToAdd = payload.cards.map(card => ({ ...card, faceUp: true }));
+        cardsToAdd = payload.cards.map((card) => ({ ...card, faceUp: true }));
       } else {
         cardsToAdd = payload.cards;
       }
@@ -50,11 +50,13 @@ export const removeCardFromStock = atom(
     const currentStock = get(stockAtom);
 
     if (currentStock.length === 0) {
-      throw new Error('Cannot remove cards from empty stock');
+      throw new Error("Cannot remove cards from empty stock");
     }
 
     if (count > currentStock.length) {
-      throw new Error(`Cannot remove ${count} cards from stock with only ${currentStock.length} cards`);
+      throw new Error(
+        `Cannot remove ${count} cards from stock with only ${currentStock.length} cards`
+      );
     }
 
     // Remove from the end (top of stack)
@@ -70,11 +72,13 @@ export const dealCardsFromStock = atom(
     const currentStock = get(stockAtom);
 
     if (currentStock.length === 0) {
-      throw new Error('Cannot deal cards from empty stock');
+      throw new Error("Cannot deal cards from empty stock");
     }
 
     if (count > currentStock.length) {
-      throw new Error(`Cannot deal ${count} cards from stock with only ${currentStock.length} cards`);
+      throw new Error(
+        `Cannot deal ${count} cards from stock with only ${currentStock.length} cards`
+      );
     }
 
     // Deal from the end (top of stack)
@@ -86,14 +90,18 @@ export const dealCardsFromStock = atom(
 // Action to reset stock pile
 export const resetStock = atom(
   null,
-  (get, set, { cards, faceDown }: { cards?: Card[]; faceDown?: boolean } = {}) => {
+  (
+    get,
+    set,
+    { cards, faceDown }: { cards?: Card[]; faceDown?: boolean } = {}
+  ) => {
     if (cards) {
       // Reset with new cards
       let resetCards: Card[];
 
       if (faceDown === true) {
         // Force all cards face down
-        resetCards = cards.map(card => ({ ...card, faceUp: false }));
+        resetCards = cards.map((card) => ({ ...card, faceUp: false }));
       } else if (faceDown === false) {
         // Preserve original card orientation
         resetCards = cards;

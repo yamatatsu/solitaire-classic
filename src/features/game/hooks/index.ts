@@ -1,2 +1,3 @@
-// Custom hooks for game interactions will be defined here
-export {};
+// Game interaction hooks
+export { useDragAndDrop, type UseDragAndDropReturn } from "./useDragAndDrop";
+export { useStockPile, type UseStockPileReturn } from "./useStockPile";

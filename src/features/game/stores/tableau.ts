@@ -1,5 +1,5 @@
-import { atom } from 'jotai';
-import type { Card } from '../types';
+import { atom } from "jotai";
+import type { Card } from "../types";
 
 // Initialize empty 7-column tableau
 const initialTableau: Card[][] = Array.from({ length: 7 }, () => []);
@@ -30,7 +30,11 @@ export const addCardToTableauColumn = atom(
 // Action to remove a card from a specific column
 export const removeCardFromTableauColumn = atom(
   null,
-  (get, set, { columnIndex, cardId }: { columnIndex: number; cardId?: string }) => {
+  (
+    get,
+    set,
+    { columnIndex, cardId }: { columnIndex: number; cardId?: string }
+  ) => {
     if (columnIndex < 0 || columnIndex >= 7) {
       throw new Error(`Invalid column index: ${columnIndex}`);
     }
@@ -39,18 +43,20 @@ export const removeCardFromTableauColumn = atom(
     const column = currentTableau[columnIndex];
 
     if (column.length === 0) {
-      throw new Error('Cannot remove card from empty column');
+      throw new Error("Cannot remove card from empty column");
     }
 
     let newColumn: Card[];
 
     if (cardId) {
       // Remove specific card by ID
-      const cardIndex = column.findIndex(card => card.id === cardId);
+      const cardIndex = column.findIndex((card) => card.id === cardId);
       if (cardIndex === -1) {
-        throw new Error(`Card with id ${cardId} not found in column ${columnIndex}`);
+        throw new Error(
+          `Card with id ${cardId} not found in column ${columnIndex}`
+        );
       }
-      newColumn = column.filter(card => card.id !== cardId);
+      newColumn = column.filter((card) => card.id !== cardId);
     } else {
       // Remove last card
       newColumn = column.slice(0, -1);
@@ -70,17 +76,23 @@ export const removeCardFromTableauColumn = atom(
 // Action to flip a card in a specific column
 export const flipCardInTableau = atom(
   null,
-  (get, set, { columnIndex, cardId }: { columnIndex: number; cardId: string }) => {
+  (
+    get,
+    set,
+    { columnIndex, cardId }: { columnIndex: number; cardId: string }
+  ) => {
     if (columnIndex < 0 || columnIndex >= 7) {
       throw new Error(`Invalid column index: ${columnIndex}`);
     }
 
     const currentTableau = get(tableauAtom);
     const column = currentTableau[columnIndex];
-    const cardIndex = column.findIndex(card => card.id === cardId);
+    const cardIndex = column.findIndex((card) => card.id === cardId);
 
     if (cardIndex === -1) {
-      throw new Error(`Card with id ${cardId} not found in column ${columnIndex}`);
+      throw new Error(
+        `Card with id ${cardId} not found in column ${columnIndex}`
+      );
     }
 
     const newTableau = currentTableau.map((col, colIndex) => {

@@ -1,7 +1,7 @@
-import React from 'react';
-import { cn } from '@/lib/utils';
-import { Card } from './Card';
-import type { Card as CardType } from '../types';
+import type React from "react";
+import { cn } from "@/lib/utils";
+import type { Card as CardType } from "../types";
+import { Card } from "./Card";
 
 interface WasteProps {
   cards: CardType[];
@@ -9,7 +9,7 @@ interface WasteProps {
   onWasteClick?: () => void;
   maxVisible?: number;
   className?: string;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export const Waste: React.FC<WasteProps> = ({
@@ -18,7 +18,7 @@ export const Waste: React.FC<WasteProps> = ({
   onWasteClick,
   maxVisible = 3,
   className,
-  'data-testid': testId,
+  "data-testid": testId,
 }) => {
   const hasCards = cards.length > 0;
 
@@ -44,11 +44,11 @@ export const Waste: React.FC<WasteProps> = ({
     return (
       <div
         className={cn(
-          'relative flex items-center justify-center',
-          'w-16 h-24 min-h-[44px] min-w-[44px]', // Ensure touch targets
-          'bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg',
-          'hover:border-gray-400 hover:bg-gray-100 transition-all cursor-pointer',
-          'shadow-sm'
+          "relative flex items-center justify-center",
+          "w-16 h-24 min-h-[44px] min-w-[44px]", // Ensure touch targets
+          "bg-gray-50 border-2 border-dashed border-gray-300 rounded-lg",
+          "hover:border-gray-400 hover:bg-gray-100 transition-all cursor-pointer",
+          "shadow-sm"
         )}
         onClick={handleWasteClick}
         data-testid={testId || "waste-empty"}
@@ -57,9 +57,7 @@ export const Waste: React.FC<WasteProps> = ({
         aria-label="Empty waste pile"
       >
         <div className="flex items-center justify-center p-2">
-          <div className="text-xs text-gray-400 font-medium">
-            Waste
-          </div>
+          <div className="text-xs text-gray-400 font-medium">Waste</div>
         </div>
       </div>
     );
@@ -67,10 +65,7 @@ export const Waste: React.FC<WasteProps> = ({
 
   return (
     <div
-      className={cn(
-        'relative w-20 h-24',
-        className
-      )}
+      className={cn("relative w-20 h-24", className)}
       onClick={handleWasteClick}
       data-testid={testId || "waste"}
       role="region"
@@ -78,7 +73,8 @@ export const Waste: React.FC<WasteProps> = ({
     >
       {visibleCards.map((card, visibleIndex) => {
         const isTopCard = visibleIndex === visibleCards.length - 1;
-        const actualIndex = Math.max(0, cards.length - maxVisible) + visibleIndex;
+        const actualIndex =
+          Math.max(0, cards.length - maxVisible) + visibleIndex;
 
         // Offset cards to show layering effect
         const leftOffset = visibleIndex * 6; // 6px offset between cards
@@ -90,20 +86,21 @@ export const Waste: React.FC<WasteProps> = ({
             className="absolute"
             style={{
               left: `${leftOffset}px`,
-              zIndex: zIndex
+              zIndex: zIndex,
             }}
           >
             <Card
               card={{
                 ...card,
-                faceUp: true // All waste cards should be face up
+                faceUp: true, // All waste cards should be face up
               }}
               onClick={() => handleCardClick(card.id, visibleIndex)}
               size="small"
               className={cn(
-                'transition-transform',
-                isTopCard && 'hover:scale-105 hover:translate-y-[-2px] cursor-pointer',
-                !isTopCard && 'cursor-default'
+                "transition-transform",
+                isTopCard &&
+                  "hover:scale-105 hover:translate-y-[-2px] cursor-pointer",
+                !isTopCard && "cursor-default"
               )}
               draggable={isTopCard}
               data-testid={`waste-card-${actualIndex}`}
@@ -116,10 +113,10 @@ export const Waste: React.FC<WasteProps> = ({
       {cards.length > maxVisible && (
         <div
           className={cn(
-            'absolute -top-2 -right-2 z-20',
-            'w-6 h-6 bg-orange-600 text-white text-xs font-bold',
-            'rounded-full flex items-center justify-center',
-            'border-2 border-white shadow-sm'
+            "absolute -top-2 -right-2 z-20",
+            "w-6 h-6 bg-orange-600 text-white text-xs font-bold",
+            "rounded-full flex items-center justify-center",
+            "border-2 border-white shadow-sm"
           )}
           aria-hidden="true"
         >
