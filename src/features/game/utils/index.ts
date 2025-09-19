@@ -101,3 +101,51 @@ export const createGameLocation = (type: string, index?: number): string => {
 
   return `${type}-${index}`;
 };
+
+/**
+ * Creates a new Klondike solitaire game setup
+ * Deals cards according to standard Klondike rules:
+ * - 7 tableau columns with 1, 2, 3, 4, 5, 6, 7 cards respectively
+ * - Only the top card in each column is face up
+ * - Remaining cards go to stock
+ * - Foundations and waste start empty
+ */
+export const createNewGameState = (): {
+  tableau: Card[][];
+  foundations: Card[][];
+  stock: Card[];
+  waste: Card[];
+} => {
+  // Create and shuffle deck
+  const deck = shuffleDeck(createDeck());
+  let cardIndex = 0;
+
+  // Deal tableau columns
+  const tableau: Card[][] = [];
+  for (let col = 0; col < 7; col++) {
+    const column: Card[] = [];
+    // Deal cards for this column (column index + 1 cards)
+    for (let row = 0; row <= col; row++) {
+      const card = { ...deck[cardIndex] };
+      // Only the bottom card (last dealt) is face up
+      card.faceUp = row === col;
+      column.push(card);
+      cardIndex++;
+    }
+    tableau.push(column);
+  }
+
+  // Remaining cards go to stock (all face down)
+  const stock = deck.slice(cardIndex).map(card => ({ ...card, faceUp: false }));
+
+  // Empty foundations and waste
+  const foundations = Array.from({ length: 4 }, () => [] as Card[]);
+  const waste: Card[] = [];
+
+  return {
+    tableau,
+    foundations,
+    stock,
+    waste,
+  };
+};
