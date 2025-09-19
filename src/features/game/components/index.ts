@@ -1,2 +1,2 @@
 // Game components will be exported from here
-export {};
+export { Card } from './Card';
