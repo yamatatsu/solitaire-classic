@@ -1,4 +1,5 @@
 import "./App.css";
+import { Button } from "@/components/ui/button";
 
 // Props interface for the App component
 interface AppProps {
@@ -15,13 +16,10 @@ function App({ className }: AppProps) {
         <p className="subtitle text-lg text-gray-600 mt-2">
           Welcome to Solitaire Classic
         </p>
-        <div className="mt-4">
-          <button
-            type="button"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Test Tailwind Button
-          </button>
+        <div className="mt-4 space-x-4">
+          <Button variant="default">shadcn Default Button</Button>
+          <Button variant="outline">shadcn Outline Button</Button>
+          <Button variant="destructive">shadcn Destructive</Button>
         </div>
       </header>
     </main>
