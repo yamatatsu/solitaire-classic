@@ -33,7 +33,10 @@
       "Bash(tree *)",
       "List(**)",
       "WebFetch(domain:github.com)",
-      "WebSearch"
-    ]
+      "WebSearch",
+      "mcp__serena__list_dir"
+    ],
+    "deny": [],
+    "ask": []
   }
 }
